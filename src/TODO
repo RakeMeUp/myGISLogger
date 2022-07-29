@@ -1,0 +1,28 @@
+paste stuff in, it automatically converts to data
+easily adjustable variables
+saves data in file ? - calculate from data every visit or cache??
+
+MAIN POINTS:
+
+- convert to data from paste
+  multiple lines too
+
+- saves data into file on successful paste
+  duplicates are deleted, only warning about it
+
+- adjustable convertion variables
+
+FEATURES:
+
+- Main page has the diagrams and the statistics
+- Datapage contains the table, and the PasteBox
+- maybe setting on sidemenu ???
+- checks names, warns if finds a different name DONE
+- all calculations from excel
+- adjustable variables
+- add settings page for var changes
+- diagrams perhaps???
+
+libs:
+
+- tanstack table ????
