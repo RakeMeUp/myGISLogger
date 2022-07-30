@@ -19,7 +19,7 @@ function DataTable() {
         </tr>
       </thead>
       <tbody>
-        {entries.map((row, index)=>{
+        {entries !== [] ? entries.map((row, index)=>{
           return (
             <tr key={index}>
                 <td>{row['Managed Area']}</td>
@@ -32,7 +32,7 @@ function DataTable() {
                 <td><button onClick={()=>{removeData(row)}}>Delete</button></td>
             </tr>
           )
-        })}
+        }) : 'WAIT'}
       </tbody>
     </table>
   )

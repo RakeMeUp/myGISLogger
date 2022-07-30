@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useContext, useState } from 'react'
+import { createContext, ReactNode, useContext, useEffect, useState } from 'react'
 
 export interface Options{
     pay: number
@@ -14,9 +14,10 @@ export interface Options{
 
 interface VarContext{
     setVariables : (obj: Options) => void
+    eraseVariables: ()=>void
     toggleMenu : ()=>void
-    vars : Options
     isMenuOpen : boolean
+    vars : Options
 }
 
 interface VarContextProviderProps{
@@ -33,7 +34,9 @@ export function useVarContext(){
 
 export function VarContextProvider({children}: VarContextProviderProps) {
 
-    const [vars, setVars] = useState<Options>({
+    const [vars, setVars] = useState<Options>({} as Options)
+    const [isMenuOpen, setIsMenuOpen] = useState(false)
+    const initVars = {
         pay: 1700,
         mon_hrs: 5,
         tue_hrs: 5,
@@ -43,13 +46,21 @@ export function VarContextProvider({children}: VarContextProviderProps) {
         sat_hrs: 0,
         sun_hrs: 0,
         goal_tree_per_hour: 5
-    })
-    const [isMenuOpen, setIsMenuOpen] = useState(false)
+    }
+
+    useEffect(()=>{
+        setVars(JSON.parse(localStorage.getItem('VARS') || JSON.stringify(initVars)))
+    }, [])
 
     function setVariables(obj: Options){
         setVars(currVars => { 
-            return {...currVars, ...obj}
+            const result = {...currVars, ...obj}
+            localStorage.setItem('VARS', JSON.stringify(result))
+            return result
         })
+    }
+    function eraseVariables(){
+        localStorage.removeItem('VARS')
     }
 
     function toggleMenu(){
@@ -61,7 +72,8 @@ export function VarContextProvider({children}: VarContextProviderProps) {
         setVariables,
         vars,
         toggleMenu,
-        isMenuOpen
+        isMenuOpen,
+        eraseVariables
     }}>
         {children}
     </VarContext.Provider>

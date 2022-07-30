@@ -1,7 +1,7 @@
 //Paste structure:
 //Project_name \t Managed_Area \t LAS_name \t Operator \t Date \t Start \t End \t Duration \r\n
 
-//takes excel rows, turns them into an object, returns an array size [1 : inf[
+//takes excel rows, turns them into an object, returns an array, size [1 : inf[
 import { excelObject } from '../interfaces/excelObj';
 
 function commaToDot(str: string){

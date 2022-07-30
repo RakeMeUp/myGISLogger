@@ -1,10 +1,12 @@
-import { Preview } from "@mui/icons-material"
-import { createContext, ReactNode, useContext, useState } from "react"
+import { createContext, ReactNode, useContext, useEffect, useState } from "react"
 import { excelObject } from "../interfaces/excelObj"
+import fixDate from "../interfaces/fixDate"
 
 interface DataContext{
     addData: (obj: excelObject)=> void
     removeData: (obj: excelObject)=> void
+    getData: ()=> excelObject[] | []
+    eraseData: ()=>void
     getSumOfMinutes: (arr: excelObject[])=> number
     entries: excelObject[]
 }
@@ -12,9 +14,7 @@ interface DataContext{
 interface DataContextProviderProps{
     children: ReactNode
 }
-
 const DataContext = createContext({} as DataContext)
-
 export function useDataContext(){
     return useContext(DataContext)
 }
@@ -23,6 +23,18 @@ export function DataContextProvider({children}: DataContextProviderProps) {
 
     const [entries, setEntries] = useState<excelObject[]>([])
 
+    useEffect(()=>{
+        setEntries(getData())
+    },[])
+
+    function getData(){
+       return fixDate(JSON.parse(localStorage.getItem("DATA") || "[]"))
+    }
+
+    function eraseData(){
+        localStorage.removeItem('DATA'),
+        setEntries([])
+    }
 
     function addData(obj: excelObject){
         try{
@@ -31,12 +43,14 @@ export function DataContextProvider({children}: DataContextProviderProps) {
             setEntries(currentObjects =>{
                 // check if item not in currentObjects array
                 if(currentObjects.find(item=>  JSON.stringify(item) === JSON.stringify(obj) ) == null){
-                    return[...currentObjects, obj];
+                    const result = [...currentObjects, obj]
+                    localStorage["DATA"] = JSON.stringify(result);
+                    return result;
                 }else{
                     //this is probably bad 
                     return [...currentObjects];
                 }
-            })
+            });
         }catch(e: any){
             console.log(e.message)
         }
@@ -61,7 +75,9 @@ export function DataContextProvider({children}: DataContextProviderProps) {
         addData,
         removeData,
         getSumOfMinutes,
-        entries
+        entries,
+        getData,
+        eraseData
     }}>
         {children}
     </DataContext.Provider>

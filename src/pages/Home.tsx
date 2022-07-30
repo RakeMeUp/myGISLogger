@@ -10,6 +10,7 @@ function Home() {
         <h2>work</h2>
         <h3>Current</h3>
         <div>mins: {getSumOfMinutes(entries)}</div>
+        <div>{JSON.stringify(entries)}</div>
       </div>
     </>
   )
