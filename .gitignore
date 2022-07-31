@@ -23,4 +23,4 @@ dist-ssr
 *.sln
 *.sw?
 # todo file
-TODO
+src/TODO

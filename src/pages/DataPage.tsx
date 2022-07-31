@@ -10,7 +10,6 @@ function DataPage() {
   const {addData, eraseData} = useDataContext()
   const {eraseVariables} = useVarContext()
 
-  
   useEffect(() => {
       const handlePasteAnywhere = (event:any) => {  
           let data = event.clipboardData.getData('text')
@@ -26,7 +25,6 @@ function DataPage() {
         window.removeEventListener('paste', handlePasteAnywhere);
       };
   }, []);
-
 
   return (
     <div>
