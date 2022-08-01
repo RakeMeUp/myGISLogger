@@ -1,4 +1,4 @@
-import { excelObject } from "./excelObj";
+import { excelObject } from "../interfaces/excelObj";
 
 export default function fixDate(array: excelObject[]){
     return array.map(item =>{

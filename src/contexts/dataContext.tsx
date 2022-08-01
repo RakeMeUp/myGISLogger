@@ -1,13 +1,12 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from "react"
 import { excelObject } from "../interfaces/excelObj"
-import fixDate from "../interfaces/fixDate"
+import fixDate from "../utils/fixDate"
 
 interface DataContext{
     addData: (obj: excelObject)=> void
     removeData: (obj: excelObject)=> void
     getData: ()=> excelObject[] | []
     eraseData: ()=>void
-    getSumOfMinutes: (arr: excelObject[])=> number
     entries: excelObject[]
 }
 
@@ -62,10 +61,6 @@ export function DataContextProvider({children}: DataContextProviderProps) {
         })
     }
 
-    function getSumOfMinutes(arr: excelObject[]){
-        return arr.reduce((acc, curr)=> { return acc + curr.Duration}, 0)
-    }
-
     function isNameMatching(obj: excelObject, name: string){
         return name === obj.Operator
     }
@@ -74,7 +69,6 @@ export function DataContextProvider({children}: DataContextProviderProps) {
     <DataContext.Provider value={{
         addData,
         removeData,
-        getSumOfMinutes,
         entries,
         getData,
         eraseData
