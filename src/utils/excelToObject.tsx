@@ -3,6 +3,7 @@
 
 //takes excel rows, turns them into an object, returns an array, size [1 : inf[
 import { excelObject } from '../interfaces/excelObj';
+import { compareExcelObjects } from './compareExcelObjects';
 
 function commaToDot(str: string){
   let replaced = str.replace(/,/g, '.')
@@ -27,7 +28,9 @@ function excelToObject(str: string): excelObject[] {
         'Duration': +commaToDot(trimmed[7]),
       }
     })
-//HORRIBLY HARD CODED!!!
+
+  resultArr.sort(compareExcelObjects)
+  //HORRIBLY HARD CODED!!!
   return resultArr;
 }
 

@@ -1,4 +1,5 @@
 import { useDataContext } from "../../contexts/dataContext"
+import { timeToDecimal } from "../../utils/timeToDecimal"
 
 function DataTable() {
 
@@ -19,7 +20,7 @@ function DataTable() {
         </tr>
       </thead>
       <tbody>
-        {entries !== [] ? entries.map((row, index)=>{
+        {entries.map((row, index)=>{
           return (
             <tr key={index}>
                 <td>{row['Managed Area']}</td>
@@ -32,7 +33,7 @@ function DataTable() {
                 <td><button onClick={()=>{removeData(row)}}>Delete</button></td>
             </tr>
           )
-        }) : 'WAIT'}
+        })}
       </tbody>
     </table>
   )

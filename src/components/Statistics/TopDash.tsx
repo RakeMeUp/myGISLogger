@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useDataContext } from "../../contexts/dataContext"
 import { useVarContext } from "../../contexts/varContext"
-import {calculateDebt, getAmountOfDay, getAverageTreePerDay, getDay, getDaysWorked, getNeededTreesToday, getPay, getPayByHour, getSumOfMinutes, getTreesOfWeek} from "../../utils/dataAlgos"
+import {calculateDebt, getAmountOfDay, getAverageHoursPerDay, getAverageTreePerDay, getDay, getDaysWorked, getNeededTreesToday, getPay, getPayByHour, getSumOfMinutes, getTreesOfWeek} from "../../utils/dataAlgos"
 
 function TopDash() {
 
@@ -24,6 +24,8 @@ function TopDash() {
                 <div>pay: {getPay(entries.length, vars.pay, vars.goal_tree_per_hour)}</div>
                 <div>debt: {calculateDebt(entries.length, getSchedule(), date)}</div>
                 <div>pay by hour: {getPayByHour(vars.pay, getSumOfMinutes(entries))}</div>
+                <div>avg hour per day: {getAverageHoursPerDay(getDaysWorked(entries),getSumOfMinutes(entries)/60)}</div>
+                <div>hours: {(getSumOfMinutes(entries)/60).toFixed(2)}</div>
             </div>
             ) : "Wait"}
         </div>

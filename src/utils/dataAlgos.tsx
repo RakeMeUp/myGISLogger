@@ -6,6 +6,9 @@ export function getSumOfMinutes(arr: excelObject[]): number{
     return arr.reduce((acc, curr)=> { return acc + curr.Duration}, 0)
 }
 
+/**
+*   Gives back the day-of-month of the entry
+*/
 export function getDay(obj: excelObject): number{
     // +1 cuz starts at 0
     // ? to not throw error when entries not set yet
@@ -29,6 +32,10 @@ export function getDaysWorked(array:excelObject[]): number{
 
 export function getAverageTreePerDay(array:excelObject[]): string{
     return (array.length / getDaysWorked(array)).toFixed(2)
+}
+
+export function getAverageHoursPerDay(daysWorked: number, sumOfHours: number): string{
+    return (sumOfHours / daysWorked).toFixed(2)
 }
 
 export function getNeededTreesToday(array:excelObject[], day: number, sched: Schedule): number{
