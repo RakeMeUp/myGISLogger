@@ -1,5 +1,5 @@
 import { useState } from "react"
-import DaysTable from "../components/Statistics/daysTable"
+import DaysTable from "../components/Statistics/DaysTable"
 import TopDash from "../components/Statistics/TopDash"
 
 function Home() {
