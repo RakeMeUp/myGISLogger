@@ -9,8 +9,7 @@ export interface Options{
     fri_hrs: number
     sat_hrs: number
     sun_hrs: number
-    goal_tree_per_hour: number,
-    debt: number
+    goal_tree_per_hour: number
 }
 export interface Schedule{
     mon_hrs: 5,
@@ -28,8 +27,6 @@ interface VarContext{
     isMenuOpen : boolean
     vars : Options
     getSchedule : ()=> Schedule
-    setDebt : (num: number)=> void
-    getDebt : ()=> number
 }
 
 interface VarContextProviderProps{
@@ -57,7 +54,7 @@ export function VarContextProvider({children}: VarContextProviderProps) {
         fri_hrs: 5,
         sat_hrs: 0,
         sun_hrs: 0,
-        debt: 0
+        goal_tree_per_hour: 5,
     }
 
     useEffect(()=>{
@@ -70,18 +67,6 @@ export function VarContextProvider({children}: VarContextProviderProps) {
             localStorage.setItem('VARS', JSON.stringify(result))
             return result
         })
-    }
-
-    function setDebt(num: number){
-        setVars(currVars => { 
-            const result = {...currVars, debt: num}
-            localStorage.setItem('VARS', JSON.stringify(result))
-            return result
-        })
-    }
-
-    function getDebt(){
-        return vars.debt;
     }
 
     function eraseVariables(){
@@ -104,9 +89,7 @@ export function VarContextProvider({children}: VarContextProviderProps) {
         toggleMenu,
         isMenuOpen,
         eraseVariables,
-        getSchedule,
-        setDebt,
-        getDebt
+        getSchedule
     }}>
         {children}
     </VarContext.Provider>

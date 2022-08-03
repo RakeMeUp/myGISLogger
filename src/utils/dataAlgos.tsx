@@ -1,5 +1,6 @@
 import { Schedule } from "../contexts/varContext"
 import { excelObject } from "../interfaces/excelObj"
+import { currencyFormatter } from "./currencyFormatter"
 
 export function getSumOfMinutes(arr: excelObject[]): number{
     return arr.reduce((acc, curr)=> { return acc + curr.Duration}, 0)
@@ -16,7 +17,7 @@ export function getAmountOfDay(array: excelObject[], day: number): number{
     return filtered.length
 }
 
-export function getEntriesOfDay(array:excelObject[], day: number): excelObject[]{
+export function getEntryObjectsOfDay(array:excelObject[], day: number): excelObject[]{
     return array.filter(e=> getDay(e) === day)
 }
 
@@ -30,9 +31,9 @@ export function getAverageTreePerDay(array:excelObject[]): string{
     return (array.length / getDaysWorked(array)).toFixed(2)
 }
 
-export function getNeededTreesToday(array:excelObject[], day: number, sched: Schedule, debt: number): number{
+export function getNeededTreesToday(array:excelObject[], day: number, sched: Schedule): number{
     const neededOfDay = Object.values(sched)[getDateFromDay(array, day)?.getUTCDay()|| 0]
-    const result = (neededOfDay - (getAmountOfDay(array, day) + debt) )
+    const result = (neededOfDay - getAmountOfDay(array, day) )
     return result < 0 ? 0 : result;
 }
 
@@ -51,12 +52,19 @@ export function getDateFromDay(array:excelObject[], day:number){
 }
 
 export function getPay(currentTrees: number, pay: number, goalAvg: number): string{
-    const CURRENCY_FORMATTER = new Intl.NumberFormat(undefined,
-        {
-            currency: "HUF",
-            style: "currency",
-            minimumFractionDigits: 0,
-        });
     const result =  currentTrees * (pay / goalAvg)
-    return CURRENCY_FORMATTER.format(result)
+    return currencyFormatter(result)
+}
+
+export function calculateDebt(done: number, sched: Schedule, day: number){
+    const arr = [...Object.values(sched)];
+    let schedSum = 0;
+    for(let i = 0; i < day; i++){
+        schedSum += +arr[i%7];
+    }
+    return schedSum - done
+}
+
+export function getPayByHour(pay:number, mins: number){
+    return currencyFormatter(+(mins/60 * pay).toFixed(0))
 }
