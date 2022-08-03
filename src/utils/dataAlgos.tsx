@@ -49,3 +49,14 @@ export function getTreesOfWeek(array:excelObject[], week: number): number{
 export function getDateFromDay(array:excelObject[], day:number){
     return array.find(e=> getDay(e) === day)?.Date
 }
+
+export function getPay(currentTrees: number, pay: number, goalAvg: number): string{
+    const CURRENCY_FORMATTER = new Intl.NumberFormat(undefined,
+        {
+            currency: "HUF",
+            style: "currency",
+            minimumFractionDigits: 0,
+        });
+    const result =  currentTrees * (pay / goalAvg)
+    return CURRENCY_FORMATTER.format(result)
+}

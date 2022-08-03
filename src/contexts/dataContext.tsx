@@ -1,5 +1,6 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from "react"
 import { excelObject } from "../interfaces/excelObj"
+import { compareExcelObjects } from "../utils/compareExcelObjects"
 import fixDate from "../utils/fixDate"
 
 interface DataContext{
@@ -43,6 +44,9 @@ export function DataContextProvider({children}: DataContextProviderProps) {
                 // check if item not in currentObjects array
                 if(currentObjects.find(item=>  JSON.stringify(item) === JSON.stringify(obj) ) == null){
                     const result = [...currentObjects, obj]
+
+                    result.sort(compareExcelObjects)
+
                     localStorage["DATA"] = JSON.stringify(result);
                     return result;
                 }else{

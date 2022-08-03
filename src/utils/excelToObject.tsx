@@ -10,10 +10,9 @@ function commaToDot(str: string){
 }
 
 
-function excelToObject(str: string) {
+function excelToObject(str: string): excelObject[] {
     let linesArr: Array<string> = str.trim().split('\n');
     let resultArr: excelObject[] = linesArr.map(line =>{
-
       const trimmed = line.trim().split('\t');
       if(trimmed.length != 8) throw new Error('Paste Error: Wrong Format')
 
