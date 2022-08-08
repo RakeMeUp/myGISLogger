@@ -9,5 +9,10 @@ I needed a way to efficiently log my work, so i created/creating this website fo
 * Upon entering the Main page, data will be calculated and shown to the user.
 * All in Client-side, cuz Netlify is free and I am broke.
 
+## Tech used
+
+* React (Vite) + TypeScript + Sass
+* Jest + Vitest for Unit Testing
+
 ## Current Stage of the Website
 About 20% Done.
